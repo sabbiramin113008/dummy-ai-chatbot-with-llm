@@ -6,6 +6,19 @@ date: 29 Sep 2023
 email: sabbir.amin@goava.com, sabbiramin.cse11ruet@gmail.com
 
 """
+import spacy
+
+# loading the nlp model
+
+nlp = spacy.load("en_core_web_sm")
+
+
+def get_intent_by_spacy(user_query):
+    user_query = user_query.lower()
+    user_query_doc = nlp(user_query)
+    intent_keywords = [token.text for token in user_query_doc if token.pos_ == "VERB" or token.pos_ == "NOUN"]
+    # print('intent-keywords:', intent_keywords)
+    return intent_keywords
 
 
 def get_intent(user_query):
@@ -26,4 +39,3 @@ def get_intent(user_query):
     else:
         # If no specific intent is identified, return a default intent (e.g., "unknown")
         return 'unknown'
-
